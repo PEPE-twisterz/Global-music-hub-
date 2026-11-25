@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Global Music Hub</title>
+
+<style>
+:root {
+    --bg: #080c16;
+    --panel: #121a2b;
+    --accent: #00e5ff;
+    --text: #ffffff;
+    --muted: #a3aec2;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: Arial, sans-serif;
+    padding-bottom: 100px;
+}
+
+header {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--panel);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo {
+    color: var(--accent);
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;
+    margin-left: 12px;
+    font-size: 13px;
+}
+
+.hero {
+    padding: 55px 20px;
+    background: linear-gradient(130deg, #10233b, #073d50);
+}
+
+.hero h1 {
+    font-size: 35px;
+    margin-bottom: 12px;
+}
+
+.hero p {
+    color: #d0e1ef;
+    margin-bottom: 20px;
+}
+
+.search {
+    display: flex;
+    max-width: 600px;
+}
+
+.search input {
+    flex: 1;
+    min-width: 0;
+    padding: 15px;
+    border: none;
+    border-radius: 8px 0 0 8px;
+    outline: none;
+}
+
+.search button {
+    padding: 15px;
+    border: none;
+    background: var(--accent);
+    font-weight: bold;
+    border-radius: 0 8px 8px 0;
+}
+
+section {
+    padding: 25px 18px;
+}
+
+.section-title {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+h2 {
+    font-size: 21px;
+}
+
+.section-title span {
+    color: var(--accent);
+    font-size: 13px;
+}
+
+.categories {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 12px;
+}
+
+.category {
+    border: 1px solid #26364e;
+    background: var(--panel);
+    color: white;
+    padding: 11px 17px;
+    border-radius: 25px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.category:active {
+    background: var(--accent);
+    color: #080c16;
+}
+
+.music-grid {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit, minmax(145px, 1fr)
+    );
+    gap: 15px;
+}
+
+.card {
+    background: var(--panel);
+    padding: 11px;
+    border-radius: 13px;
+    overflow: hidden;
+}
+
+.card img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 9px;
+}
+
+.card h3 {
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.card p {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 5px;
+}
+
+.card audio {
+    width: 100%;
+    margin-top: 12px;
+}
+
+.card button {
+    border: none;
+    background: transparent;
+    color: var(--accent);
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.card a {
+    display: block;
+    color: var(--accent);
+    font-size: 12px;
+    margin-top: 10px;
+    text-decoration: none;
+}
+
+.player {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #15243a;
+    border-top: 1px solid var(--accent);
+    padding: 13px;
+    text-align: center;
+    z-index: 20;
+}
+
+.player p {
+    font-size: 13px;
+    color: var(--accent);
+    margin-bottom: 8px;
+}
+
+.player audio {
+    width: 100%;
+    max-width: 500px;
+}
+
+.empty {
+    color: var(--muted);
+    padding: 15px 0;
+}
+
+footer {
+    background: var(--panel);
+    padding: 25px;
+    text-align: center;
+    color: var(--muted);
+}
+
+@media(max-width: 480px) {
+    .menu a {
+        margin-left: 5px;
+        font-size: 11px;
+    }
+
+    .hero h1 {
+        font-size: 28px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🎵 GLOBAL HUB</div>
+
+    <nav class="menu">
+        <a href="#home">Home</a>
+        <a href="#music">Music</a>
+        <a href="#favourites">Favourites</a>
+    </nav>
+</header>
+
+<div class="hero" id="home">
+    <h1>Discover Your Sound.</h1>
+
+    <p>
+        Explore music, discover artists and enjoy sounds
+        from every corner of the world.
+    </p>
+
+    <div class="search">
+        <input
+            id="searchInput"
+            placeholder="Search songs or musicians..."
+        >
+
+        <button onclick="searchMusic()">Search</button>
+    </div>
+</div>
+
+<section>
+    <div class="section-title">
+        <h2>🌍 Explore Regions</h2>
+    </div>
+
+    <div class="categories">
+        <button class="category" onclick="searchFor('Ugandan music')">🇺🇬 Uganda</button>
+        <button class="category" onclick="searchFor('Nigerian music')">🇳🇬 Nigeria</button>
+        <button class="category" onclick="searchFor('South African music')">🇿🇦 South Africa</button>
+        <button class="category" onclick="searchFor('American music')">🇺🇸 USA</button>
+        <button class="category" onclick="searchFor('British music')">🇬🇧 UK</button>
+        <button class="category" onclick="searchFor('Jamaican music')">🇯🇲 Jamaica</button>
+    </div>
+</section>
+
+<section id="music">
+    <div class="section-title">
+        <h2>🎧 Discover Music</h2>
+        <span>Explore tracks</span>
+    </div>
+
+    <div class="music-grid" id="results">
+        <p class="empty">
+            Search for your favourite artist or song.
+        </p>
+    </div>
+</section>
+
+<section id="favourites">
+    <div class="section-title">
+        <h2>❤️ Your Favourites</h2>
+    </div>
+
+    <div class="music-grid" id="favouriteResults">
+        <p class="empty">No favourites saved yet.</p>
+    </div>
+</section>
+
+<section>
+    <h2>🕘 Recent Searches</h2>
+    <div id="recent"></div>
+</section>
+
+<section>
+    <h2>🖥️ RustDesk Guide</h2>
+    <p style="color:var(--muted); margin-top:10px">
+        Learn about RustDesk separately from music downloads.
+    </p>
+
+    <a href="https://rustdesk.com"
+       target="_blank"
+       rel="noopener"
+       style="color:var(--accent);display:block;margin-top:12px">
+       Visit the official RustDesk website
+    </a>
+</section>
+
+<div class="player">
+    <p id="nowPlaying">GLOBAL MUSIC HUB — Mini Player</p>
+    <audio id="mainPlayer" controls></audio>
+</div>
+
+<footer>
+    <p>GLOBAL MUSIC HUB</p>
+    <p>Discover • Explore • Listen</p>
+</footer>
+
+<script>
+const results = document.getElementById("results");
+const player = document.getElementById("mainPlayer");
+
+let favourites = JSON.parse(
+    localStorage.getItem("musicFavourites") || "[]"
+);
+
+let recent = JSON.parse(
+    localStorage.getItem("musicRecent") || "[]"
+);
+
+function searchFor(query) {
+    document.getElementById("searchInput").value = query;
+    searchMusic();
+}
+
+async function searchMusic() {
+    const query = document
+        .getElementById("searchInput")
+        .value.trim();
+
+    if (!query) {
+        results.innerHTML =
+            "<p class='empty'>Enter an artist or song.</p>";
+        return;
+    }
+
+    results.innerHTML =
+        "<p class='empty'>Searching music...</p>";
+
+    recent.unshift(query);
+    recent = [...new Set(recent)].slice(0, 6);
+
+    localStorage.setItem(
+        "musicRecent",
+        JSON.stringify(recent)
+    );
+
+    showRecent();
+
+    try {
+        const url =
+        "https://itunes.apple.com/search?term=" +
+        encodeURIComponent(query) +
+        "&entity=song&limit=24";
+
+        const response = await fetch(url);
+        const data = await response.json();
+
+        results.innerHTML = "";
+
+        if (!data.results.length) {
+            results.innerHTML =
+                "<p class='empty'>No songs found.</p>";
+            return;
+        }
+
+        data.results.forEach(song => {
+            const card = document.createElement("div");
+            card.className = "card";
+
+            const image = document.createElement("img");
+            image.src = song.artworkUrl100.replace(
+                "100x100", "300x300"
+            );
+            image.alt = "Album artwork";
+
+            const title = document.createElement("h3");
+            title.textContent = song.trackName;
+
+            const artist = document.createElement("p");
+            artist.textContent = song.artistName;
+
+            card.append(image, title, artist);
+
+            if (song.previewUrl) {
+                const preview = document.createElement("button");
+
+                preview.textContent = "▶ Play preview";
+
+                preview.onclick = () => {
+                    player.src = song.previewUrl;
+                    player.play();
+
+                    document.getElementById(
+                        "nowPlaying"
+                    ).textContent =
+                    song.trackName + " — " + song.artistName;
+                };
+
+                card.appendChild(preview);
+            }
+
+            const fav = document.createElement("button");
+
+            fav.textContent =
+                favourites.some(x => x.id === song.trackId)
+                ? "❤️ Saved"
+                : "♡ Add to favourites";
+
+            fav.onclick = () => toggleFavourite(song);
+
+            card.appendChild(fav);
+
+            const link = document.createElement("a");
+            link.href = song.trackViewUrl;
+            link.target = "_blank";
+            link.rel = "noopener";
+            link.textContent = "Open official music page";
+
+            card.appendChild(link);
+            results.appendChild(card);
+        });
+
+    } catch (error) {
+        results.innerHTML =
+            "<p class='empty'>Music service unavailable. Check your internet.</p>";
+    }
+}
+
+function toggleFavourite(song) {
+    const exists = favourites.some(
+        x => x.id === song.trackId
+    );
+
+    if (exists) {
+        favourites = favourites.filter(
+            x => x.id !== song.trackId
+        );
+    } else {
+        favourites.push({
+            id: song.trackId,
+            name: song.trackName,
+            artist: song.artistName,
+            image: song.artworkUrl100,
+            url: song.trackViewUrl
+        });
+    }
+
+    localStorage.setItem(
+        "musicFavourites",
+        JSON.stringify(favourites)
+    );
+
+    showFavourites();
+    searchMusic();
+}
+
+function showFavourites() {
+    const box = document.getElementById(
+        "favouriteResults"
+    );
+
+    box.innerHTML = "";
+
+    if (!favourites.length) {
+        box.innerHTML =
+            "<p class='empty'>No favourites saved yet.</p>";
+        return;
+    }
+
+    favourites.forEach(song => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        const img = document.createElement("img");
+        img.src = song.image;
+
+        const title = document.createElement("h3");
+        title.textContent = song.name;
+
+        const artist = document.createElement("p");
+        artist.textContent = song.artist;
+
+        const link = document.createElement("a");
+        link.href = song.url;
+        link.target = "_blank";
+        link.rel = "noopener";
+        link.textContent = "Open music page";
+
+        card.append(img, title, artist, link);
+        box.appendChild(card);
+    });
+}
+
+function showRecent() {
+    const box = document.getElementById("recent");
+    box.innerHTML = "";
+
+    recent.forEach(item => {
+        const button = document.createElement("button");
+        button.className = "category";
+        button.textContent = item;
+        button.onclick = () => searchFor(item);
+
+        box.appendChild(button);
+    });
+}
+
+showRecent();
+showFavourites();
+</script>
+
+</body>
+</html>
